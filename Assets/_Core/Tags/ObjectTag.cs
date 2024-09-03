@@ -2,6 +2,6 @@ namespace Arkanoid.Tags
 {
     public enum ObjectTag
     {
-        Collidable
+        Collidable = 1,
     }
 }

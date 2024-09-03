@@ -15,11 +15,6 @@ namespace Arkanoid
         [SerializeField]
         private Ball _ball;
 
-        private void Start()
-        {
-            _ball.Angle = UnityEngine.Random.Range(0f, 90f);
-        }
-
         private void Update()
         {
             _ball.UpdatePosition(Time.deltaTime);
