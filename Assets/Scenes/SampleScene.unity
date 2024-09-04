@@ -1432,7 +1432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d17c079d704e8884aed956fb1295b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tags: 01000000
+  _tags: 0100000002000000
 --- !u!1001 &1147816472
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2766,9 +2766,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c080d8055d489d9c74af56ce2a1f30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 10
+  <Speed>k__BackingField: 8
   <Angle>k__BackingField: 45
-  _randomAngleScattering: 1
 --- !u!1001 &2133074801
 PrefabInstance:
   m_ObjectHideFlags: 0

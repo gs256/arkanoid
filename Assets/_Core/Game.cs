@@ -15,6 +15,12 @@ namespace Arkanoid
         [SerializeField]
         private Ball _ball;
 
+        private void Start()
+        {
+            BallCollisionProcessor ballCollisionProcessor = new();
+            _ball.Initialize(ballCollisionProcessor);
+        }
+
         private void Update()
         {
             _ball.UpdatePosition(Time.deltaTime);
