@@ -9,19 +9,20 @@ namespace Arkanoid
         [SerializeField]
         private Field _field;
 
-        [SerializeField]
-        private Ball _ball;
-
-        private bool _started;
         private RacketFactory _racketFactory;
+        private BallFactory _ballFactory;
         private Racket _racket;
+        private Ball _ball;
+        private bool _started;
 
         public void Initialize()
         {
             _racketFactory = GlobalContext.Instance.RacketFactory;
+            _ballFactory = GlobalContext.Instance.BallFactory;
             BallCollisionProcessor ballCollisionProcessor = new();
 
             _racket = _racketFactory.Create(_field);
+            _ball = _ballFactory.Create(_field, _racket);
             _ball.Initialize(ballCollisionProcessor);
         }
 
@@ -34,10 +35,15 @@ namespace Arkanoid
         {
             UpdateRacketPosition();
 
+            // TODO: level state
             if (!_started)
-                return;
-
-            _ball.UpdatePosition(Time.deltaTime);
+            {
+                _ball.Follow(_racket.transform);
+            }
+            else
+            {
+                _ball.UpdatePosition(Time.deltaTime);
+            }
         }
 
         private void UpdateRacketPosition()

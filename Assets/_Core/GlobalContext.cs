@@ -10,10 +10,12 @@ namespace Arkanoid
         public PrefabRepository PrefabRepository { get; private set; }
 
         public RacketFactory RacketFactory { get; private set; }
+        public BallFactory BallFactory { get; private set; }
 
         private void Awake()
         {
             RacketFactory = new RacketFactory(PrefabRepository);
+            BallFactory = new BallFactory(PrefabRepository);
 
             Instance = this;
         }

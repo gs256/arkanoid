@@ -47,13 +47,21 @@ namespace Arkanoid
 
         private bool CollidedWithRacketSide(Collision2D collision)
         {
-            return IsRacket(collision.gameObject) && GetNormal(collision) != Vector2.up;
+            return IsRacket(collision.gameObject) && GetNormal(collision).y <= 0;
         }
 
         private Vector2 GetNormal(Collision2D collision)
         {
-            Debug.Assert(collision.contacts.Length == 1, "One contact point expected");
+            DebugAssertExpectedCollisionData(collision);
             return collision.contacts[0].normal;
+        }
+
+        private void DebugAssertExpectedCollisionData(Collision2D collision)
+        {
+            Debug.Assert(collision.contacts.Length > 0, "At least one contact point expected");
+            Vector2 firstNormal = collision.contacts[0].normal;
+            foreach (var contact in collision.contacts)
+                Debug.Assert(contact.normal == firstNormal, $"Expected equal normals for each contact point, got {firstNormal} and {contact.normal}");
         }
     }
 }
