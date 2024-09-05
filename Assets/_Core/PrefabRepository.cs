@@ -10,5 +10,8 @@ namespace Arkanoid
 
         [field: SerializeField]
         public Ball Ball { get; private set; }
+
+        [field: SerializeField]
+        public GameObject Heart { get; private set; }
     }
 }

@@ -8,6 +8,7 @@ namespace Arkanoid.Levels
     public class LevelManager
     {
         public event Action CompletedAllLevels;
+        public event Action Died;
 
         private const float DelayBeforeRestart = 1f;
 
@@ -32,7 +33,7 @@ namespace Arkanoid.Levels
             _level.StartLevel();
         }
 
-        public void RestartLevel()
+        public void RestartCurrentLevel()
         {
             UnloadCurrentLevel();
             LoadLevelWithIndex(_currentIndex);
@@ -57,7 +58,7 @@ namespace Arkanoid.Levels
 
         private void OnDied()
         {
-            _coroutineRunner.StartCoroutine(RestartAfterDelayCoroutine());
+            _coroutineRunner.StartCoroutine(ProcessDeathAfterDelayCoroutine());
         }
 
         private void OnCompleted()
@@ -78,10 +79,10 @@ namespace Arkanoid.Levels
             }
         }
 
-        private IEnumerator RestartAfterDelayCoroutine()
+        private IEnumerator ProcessDeathAfterDelayCoroutine()
         {
             yield return new WaitForSeconds(DelayBeforeRestart);
-            RestartLevel();
+            Died?.Invoke();
         }
 
         private IEnumerator ProcessLevelCompletionAfterDelay()
