@@ -1,14 +1,17 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Arkanoid.Base;
 using UnityEngine;
 
-namespace Arkanoid
+namespace Arkanoid.Levels
 {
     public class Level : MonoBehaviour
     {
         private const float MouseSensitivity = 0.01f;
 
         public event Action Died;
+        public event Action Completed;
 
         [SerializeField]
         private Field _field;
@@ -19,6 +22,8 @@ namespace Arkanoid
         private Ball _ball;
         private bool _started;
         private bool _died;
+        private bool _completed;
+        private List<Block> _blocks;
 
         public void Initialize()
         {
@@ -29,6 +34,7 @@ namespace Arkanoid
             _racket = _racketFactory.Create(_field);
             _ball = _ballFactory.Create(_field, _racket);
             _ball.Initialize(ballCollisionProcessor);
+            SetupBlocks();
         }
 
         public void StartLevel()
@@ -46,7 +52,31 @@ namespace Arkanoid
             else
                 _ball.UpdatePosition(Time.deltaTime);
 
-            CheckDieCondition();
+            if (!_completed)
+                CheckDieCondition();
+        }
+
+        private void SetupBlocks()
+        {
+            _blocks = GetComponentsInChildren<Block>().ToList();
+            Debug.Assert(_blocks.Count > 0, "There should be at least one block on a level");
+            foreach (var block in _blocks)
+                block.Destroyed += OnBlockDestroyed;
+        }
+
+        private void OnBlockDestroyed(Block block)
+        {
+            block.Destroyed -= OnBlockDestroyed;
+            _blocks.Remove(block);
+
+            if (_blocks.Count == 0)
+                OnAllBlocksDestroyed();
+        }
+
+        private void OnAllBlocksDestroyed()
+        {
+            _completed = true;
+            Completed?.Invoke();
         }
 
         private void UpdateRacketPosition()

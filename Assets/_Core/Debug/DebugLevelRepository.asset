@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a5342d7da944e908bbaf20f908dda8d, type: 3}
-  m_Name: LevelRepository
+  m_Name: DebugLevelRepository
   m_EditorClassIdentifier: 
   <Levels>k__BackingField:
-  - {fileID: 185198393505977910, guid: eaefe2b70a98f13fcbc88fecdae2475d, type: 3}
-  - {fileID: 185198393505977910, guid: fd8a4407467e5c5e3b5eadc08e0a2134, type: 3}
+  - {fileID: 185198393505977910, guid: 5bc29ed27162833ab977f00766370f91, type: 3}
+  - {fileID: 185198393505977910, guid: 5f8b30ccfd1d96ed48271fa860b7a478, type: 3}

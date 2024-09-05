@@ -351,7 +351,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1095246582}
   - component: {fileID: 1095246583}
-  - component: {fileID: 1095246584}
   m_Layer: 0
   m_Name: Setup
   m_TagString: Untagged
@@ -368,7 +367,7 @@ Transform:
   m_GameObject: {fileID: 1095246581}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1486044, y: -0.099309646, z: -9.899831}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -386,20 +385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7bad87fe91e9bb5a6c4bb82e1e7d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1095246584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1095246581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b81611b1a6dc484bb9ffc5892e7ec49c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <PrefabRepository>k__BackingField: {fileID: 11400000, guid: de7dcce753a21d1eea0d57c65aac12cc, type: 2}
-  <LevelRepository>k__BackingField: {fileID: 11400000, guid: b7fb119946d82395a84a1a0508aba05c, type: 2}
 --- !u!1 &1158701270
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Arkanoid
+namespace Arkanoid.Levels
 {
     [CreateAssetMenu]
     public class LevelRepository : ScriptableObject
