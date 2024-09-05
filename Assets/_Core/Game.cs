@@ -4,19 +4,23 @@ namespace Arkanoid
 {
     public class Game : MonoBehaviour
     {
-        [SerializeField]
-        private Level _level;
+        private LevelManager _levelManager;
+
+        private void Awake()
+        {
+            _levelManager = GlobalContext.Instance.LevelManager;
+        }
 
         private void Start()
         {
-            _level.Initialize();
+            _levelManager.LoadFirstLevel();
         }
 
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                _level.StartLevel();
+                _levelManager.StartLevel();
             }
         }
     }

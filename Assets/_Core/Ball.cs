@@ -10,7 +10,7 @@ namespace Arkanoid
         [field: SerializeField]
         public float Angle { get; set; }
 
-        private Vector2 Position
+        public Vector2 Position
         {
             get => transform.position;
             set => transform.position = value;

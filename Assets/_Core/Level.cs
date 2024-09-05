@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Arkanoid
@@ -5,6 +6,8 @@ namespace Arkanoid
     public class Level : MonoBehaviour
     {
         private const float MouseSensitivity = 0.01f;
+
+        public event Action Died;
 
         [SerializeField]
         private Field _field;
@@ -14,6 +17,7 @@ namespace Arkanoid
         private Racket _racket;
         private Ball _ball;
         private bool _started;
+        private bool _died;
 
         public void Initialize()
         {
@@ -37,13 +41,11 @@ namespace Arkanoid
 
             // TODO: level state
             if (!_started)
-            {
                 _ball.Follow(_racket.transform);
-            }
             else
-            {
                 _ball.UpdatePosition(Time.deltaTime);
-            }
+
+            CheckDieCondition();
         }
 
         private void UpdateRacketPosition()
@@ -64,6 +66,18 @@ namespace Arkanoid
                 _racket.Position = _racket.Position.WithX(fieldMax - racketHalfSize);
             else if (racketMin < fieldMin)
                 _racket.Position = _racket.Position.WithX(fieldMin + racketHalfSize);
+        }
+
+        private void CheckDieCondition()
+        {
+            if (_died)
+                return;
+
+            if (_ball.Position.y < _field.Bounds.min.y)
+            {
+                _died = true;
+                Died?.Invoke();
+            }
         }
     }
 }
