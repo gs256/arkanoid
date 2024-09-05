@@ -1,3 +1,4 @@
+using Arkanoid.Base;
 using UnityEngine;
 
 namespace Arkanoid
