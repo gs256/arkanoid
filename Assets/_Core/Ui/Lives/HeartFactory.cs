@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Arkanoid.Hud
+namespace Arkanoid.Ui.Lives
 {
     public class HeartFactory
     {

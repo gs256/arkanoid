@@ -23,9 +23,11 @@ namespace Arkanoid.Base
         public GameStateFactory GameStateFactory { get; private set; }
         public GameStateMachine GameStateMachine { get; private set; }
         public MainMenuProvider MainMenuProvider { get; private set; }
+        public Player Player { get; private set; }
 
         private void Awake()
         {
+            Player = new Player();
             CoroutineRunner = CoroutineRunner.Create();
             RacketFactory = new RacketFactory(PrefabRepository);
             BallFactory = new BallFactory(PrefabRepository);

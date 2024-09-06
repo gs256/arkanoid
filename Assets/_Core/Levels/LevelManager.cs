@@ -39,6 +39,12 @@ namespace Arkanoid.Levels
             LoadLevelWithIndex(_currentIndex);
         }
 
+        public void RestartCompletely()
+        {
+            UnloadCurrentLevel();
+            LoadFirstLevel();
+        }
+
         public void UnloadCurrentLevel()
         {
             _level.Died -= OnDied;

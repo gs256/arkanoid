@@ -1,5 +1,6 @@
 using Arkanoid.Base;
-using Arkanoid.Hud;
+using Arkanoid.Ui;
+using Arkanoid.Ui.Lives;
 using UnityEngine;
 
 namespace Arkanoid
@@ -9,7 +10,10 @@ namespace Arkanoid
         public static GameContext Instance { get; private set; }
 
         [field: SerializeField]
-        public Hud.Hud Hud { get; private set; }
+        public UiController UiController { get; private set; }
+
+        [field: SerializeField]
+        public Game Game { get; private set; }
 
         public HeartFactory HeartFactory { get; private set; }
 

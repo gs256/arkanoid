@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Arkanoid.Hud
+namespace Arkanoid.Ui.Lives
 {
     public class LivesView : MonoBehaviour
     {
@@ -16,9 +16,9 @@ namespace Arkanoid.Hud
 
         public void SetLives(int lives)
         {
-            Debug.Assert(lives > 0);
-
+            Debug.Assert(lives >= 0);
             int hearts = _hearts.Count;
+
             if (hearts < lives)
                 for (int i = 0; i < lives - hearts; i++)
                     CreateHeart();
@@ -35,7 +35,9 @@ namespace Arkanoid.Hud
 
         private void RemoveHeart()
         {
-            _hearts.Remove(_hearts.Last());
+            GameObject last = _hearts.Last();
+            Destroy(last);
+            _hearts.Remove(last);
         }
     }
 }

@@ -1,50 +1,66 @@
+using System;
 using Arkanoid.Base;
 using Arkanoid.Base.GameStates;
 using Arkanoid.Levels;
+using Arkanoid.Ui;
 using UnityEngine;
 
 namespace Arkanoid
 {
-    public class Game : MonoBehaviour
+    public class Game : MonoBehaviour, IDisposable
     {
         private LevelManager _levelManager;
         private GameStateMachine _gameStateMachine;
         private Player _player;
-        private Hud.Hud _hud;
+        private UiController _uiController;
 
         private void Awake()
         {
             _levelManager = GlobalContext.Instance.LevelManager;
             _gameStateMachine = GlobalContext.Instance.GameStateMachine;
-            _hud = GameContext.Instance.Hud;
-
-            _player = new Player();
+            _uiController = GameContext.Instance.UiController;
+            _player = GlobalContext.Instance.Player;
         }
 
-        private void Start()
+        public void StartGame()
         {
             _levelManager.CompletedAllLevels += OnCompletedAllLevels;
             _levelManager.Died += OnDied;
-            _levelManager.LoadFirstLevel();
 
-            // FIXME
-            _hud.SetLives(3);
+            _player.Initialize();
+            _levelManager.LoadFirstLevel();
+            _uiController.ShowLives(_player.Lives);
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
             _levelManager.CompletedAllLevels -= OnCompletedAllLevels;
             _levelManager.Died -= OnDied;
         }
 
+        public void Revive()
+        {
+            _player.Revive();
+            _uiController.ShowLives(_player.Lives);
+            _levelManager.RestartCurrentLevel();
+        }
+
+        public void Restart()
+        {
+            _player.Initialize();
+            _levelManager.RestartCompletely();
+            _uiController.ShowLives(_player.Lives);
+        }
+
         private void OnDied()
         {
             _player.DecreaseLives();
+            _uiController.ShowLives(_player.Lives);
 
             if (_player.Lives > 0)
                 _levelManager.RestartCurrentLevel();
             else
-                _gameStateMachine.Enter<MenuState>();
+                _uiController.ShowGameOver();
         }
 
         private void OnCompletedAllLevels()
