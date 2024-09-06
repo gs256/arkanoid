@@ -8,8 +8,10 @@ namespace Arkanoid.Levels
     public class Level : MonoBehaviour
     {
         private const float MouseSensitivity = 0.01f;
+        private const float DelayBeforeDeath = 1f;
+        private const float DelayBeforeComplete = 1f;
 
-        public event Action Died;
+        public event Action Lost;
         public event Action Completed;
 
         [SerializeField]
@@ -19,43 +21,57 @@ namespace Arkanoid.Levels
         private BallFactory _ballFactory;
         private Racket _racket;
         private Ball _ball;
-        private bool _started;
-        private bool _died;
-        private bool _completed;
         private List<Block> _blocks;
         private Player _player;
+        private CoroutineRunner _coroutineRunner;
+        private BallCollisionProcessor _ballCollisionProcessor;
+        private LevelState _currentState = LevelState.Waiting;
 
         public void Initialize(Player player, RacketFactory racketFactory,
-            BallFactory ballFactory)
+            BallFactory ballFactory, CoroutineRunner coroutineRunner)
         {
-            BallCollisionProcessor ballCollisionProcessor = new();
             _player = player;
             _racketFactory = racketFactory;
             _ballFactory = ballFactory;
+            _coroutineRunner = coroutineRunner;
 
+            _ballCollisionProcessor = new BallCollisionProcessor();
             _racket = _racketFactory.Create(_field);
-            _ball = _ballFactory.Create(_field, _racket);
-            _ball.Initialize(ballCollisionProcessor);
+            SetupBall();
             SetupBlocks();
         }
 
         public void StartLevel()
         {
-            _started = true;
+            _currentState = LevelState.Playing;
         }
 
         private void Update()
         {
-            UpdateRacketPosition();
+            if (_currentState is not LevelState.Pause)
+                UpdateRacketPosition();
 
-            // TODO: level state
-            if (!_started)
+            if (_currentState is LevelState.Waiting)
                 _ball.Follow(_racket.transform);
             else
                 _ball.UpdatePosition(Time.deltaTime);
 
-            if (!_completed)
+            if (_currentState is LevelState.Playing)
                 CheckDieCondition();
+        }
+
+        public void Revive()
+        {
+            _currentState = LevelState.Waiting;
+            SetupBall();
+        }
+
+        private void SetupBall()
+        {
+            if (_ball != null)
+                Destroy(_ball.gameObject);
+            _ball = _ballFactory.Create(_field, _racket);
+            _ball.Initialize(_ballCollisionProcessor);
         }
 
         private void SetupBlocks()
@@ -78,8 +94,12 @@ namespace Arkanoid.Levels
 
         private void OnAllBlocksDestroyed()
         {
-            _completed = true;
-            Completed?.Invoke();
+            _currentState = LevelState.Completed;
+            _coroutineRunner.CallAfterDelay(DelayBeforeComplete, () =>
+            {
+                _currentState = LevelState.Pause;
+                Completed?.Invoke();
+            });
         }
 
         private void UpdateRacketPosition()
@@ -104,13 +124,20 @@ namespace Arkanoid.Levels
 
         private void CheckDieCondition()
         {
-            if (_died)
-                return;
-
             if (_ball.Position.y < _field.Bounds.min.y)
             {
-                _died = true;
-                Died?.Invoke();
+                _currentState = LevelState.Died;
+
+                _coroutineRunner.CallAfterDelay(DelayBeforeDeath, () =>
+                {
+                    _currentState = LevelState.Pause;
+                    _player.DecreaseLives();
+
+                    if (_player.Lives > 0)
+                        Revive();
+                    else
+                        Lost?.Invoke();
+                });
             }
         }
     }

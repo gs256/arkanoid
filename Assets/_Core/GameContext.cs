@@ -35,8 +35,8 @@ namespace Arkanoid
             HeartFactory = new HeartFactory(prefabRepository);
             RacketFactory = new RacketFactory(prefabRepository);
             BallFactory = new BallFactory(prefabRepository);
-            LevelFactory = new LevelFactory(player, levelRepository, RacketFactory, BallFactory);
-            LevelManager = new LevelManager(levelRepository, coroutineRunner, UiController, LevelFactory);
+            LevelFactory = new LevelFactory(player, levelRepository, RacketFactory, BallFactory, coroutineRunner);
+            LevelManager = new LevelManager(levelRepository, UiController, LevelFactory);
 
             Instance = this;
         }

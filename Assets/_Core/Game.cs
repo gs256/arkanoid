@@ -19,27 +19,31 @@ namespace Arkanoid
             _uiController = GameContext.Instance.UiController;
         }
 
-        public void StartGame()
+        public void LoadGame()
         {
             _levelManager.CompletedAllLevels += OnCompletedAllLevels;
-            _levelManager.Died += OnDied;
+            _levelManager.Lost += OnLost;
 
             _player.Initialize();
             _levelManager.LoadFirstLevel();
             _uiController.ShowLives(_player.Lives);
         }
 
+        public void StartGame()
+        {
+            _levelManager.StartLevel();
+        }
+
         public void Dispose()
         {
             _levelManager.CompletedAllLevels -= OnCompletedAllLevels;
-            _levelManager.Died -= OnDied;
+            _levelManager.Lost -= OnLost;
         }
 
         public void Revive()
         {
             _player.Revive();
-            _uiController.ShowLives(_player.Lives);
-            _levelManager.RestartCurrentLevel();
+            _levelManager.ReviveCurrentLevel();
         }
 
         public void Restart()
@@ -49,28 +53,14 @@ namespace Arkanoid
             _uiController.ShowLives(_player.Lives);
         }
 
-        private void OnDied()
+        private void OnLost()
         {
-            _player.DecreaseLives();
-            _uiController.ShowLives(_player.Lives);
-
-            if (_player.Lives > 0)
-                _levelManager.RestartCurrentLevel();
-            else
-                _uiController.ShowGameOver();
+            _uiController.ShowGameOver();
         }
 
         private void OnCompletedAllLevels()
         {
             _uiController.ShowGameCompleted();
-        }
-
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                _levelManager.StartLevel();
-            }
         }
     }
 }

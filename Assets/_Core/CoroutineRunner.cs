@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Arkanoid
@@ -10,6 +12,17 @@ namespace Arkanoid
             CoroutineRunner runner = gameObject.AddComponent<CoroutineRunner>();
             DontDestroyOnLoad(gameObject);
             return runner;
+        }
+
+        public void CallAfterDelay(float delaySeconds, Action callback)
+        {
+            StartCoroutine(RunAfterDelayCoroutine(delaySeconds, callback));
+        }
+
+        private IEnumerator RunAfterDelayCoroutine(float delaySeconds, Action callback)
+        {
+            yield return new WaitForSeconds(delaySeconds);
+            callback?.Invoke();
         }
     }
 }

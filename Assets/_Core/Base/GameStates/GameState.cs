@@ -27,7 +27,7 @@ namespace Arkanoid.Base.GameStates
         private void OnGameLoaded()
         {
             _game = GameContext.Instance.Game;
-            _game.StartGame();
+            _game.LoadGame();
         }
     }
 }

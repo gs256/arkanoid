@@ -25,6 +25,9 @@ namespace Arkanoid.Ui
         [SerializeField]
         private Game _game;
 
+        [SerializeField]
+        private GameArea _gameArea;
+
         private GameStateMachine _gameStateMachine;
 
         public void ShowLives(int lives) => _livesView.SetLives(lives);
@@ -33,6 +36,7 @@ namespace Arkanoid.Ui
         public void ShowGameOver() => _gameOverScreen.Show();
         public void ShowGameCompleted() => _gameCompletedScreen.Show();
 
+        public void StartGame() => _game.StartGame();
         public void Revive() => _game.Revive();
         public void ExitToMenu() => _gameStateMachine.Enter<MenuState>();
         public void RestartGame() => _game.Restart();
@@ -45,6 +49,7 @@ namespace Arkanoid.Ui
             _livesView.Initialize(heartFactory);
             _gameOverScreen.Initialize(this);
             _gameCompletedScreen.Initialize(this);
+            _gameArea.Initialize(this);
             _gameOverScreen.Hide();
             _gameCompletedScreen.Hide();
         }
