@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Arkanoid.Base;
 using UnityEngine;
 
 namespace Arkanoid.Levels
@@ -24,12 +23,15 @@ namespace Arkanoid.Levels
         private bool _died;
         private bool _completed;
         private List<Block> _blocks;
+        private Player _player;
 
-        public void Initialize()
+        public void Initialize(Player player, RacketFactory racketFactory,
+            BallFactory ballFactory)
         {
-            _racketFactory = GlobalContext.Instance.RacketFactory;
-            _ballFactory = GlobalContext.Instance.BallFactory;
             BallCollisionProcessor ballCollisionProcessor = new();
+            _player = player;
+            _racketFactory = racketFactory;
+            _ballFactory = ballFactory;
 
             _racket = _racketFactory.Create(_field);
             _ball = _ballFactory.Create(_field, _racket);
@@ -68,6 +70,7 @@ namespace Arkanoid.Levels
         {
             block.Destroyed -= OnBlockDestroyed;
             _blocks.Remove(block);
+            _player.AddScore(block.Points);
 
             if (_blocks.Count == 0)
                 OnAllBlocksDestroyed();

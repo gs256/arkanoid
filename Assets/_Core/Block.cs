@@ -5,12 +5,17 @@ namespace Arkanoid
 {
     public class Block : MonoBehaviour
     {
+        // TODO: to config
+        private const int DefaultPoints = 10;
+
         public event Action<Block> Destroyed;
+
+        public int Points => DefaultPoints;
 
         public void Hit()
         {
-            Destroy(gameObject);
             Destroyed?.Invoke(this);
+            Destroy(gameObject);
         }
     }
 }

@@ -16,14 +16,17 @@ namespace Arkanoid.Levels
         private readonly LevelRepository _levelRepository;
         private readonly CoroutineRunner _coroutineRunner;
         private readonly UiController _uiController;
+        private readonly LevelFactory _levelFactory;
         private Level _level;
         private int _currentIndex;
 
-        public LevelManager(LevelRepository levelRepository, CoroutineRunner coroutineRunner, UiController uiController)
+        public LevelManager(LevelRepository levelRepository, CoroutineRunner coroutineRunner,
+            UiController uiController, LevelFactory levelFactory)
         {
             _levelRepository = levelRepository;
             _coroutineRunner = coroutineRunner;
             _uiController = uiController;
+            _levelFactory = levelFactory;
         }
 
         public void LoadFirstLevel()
@@ -58,8 +61,7 @@ namespace Arkanoid.Levels
         private void LoadLevelWithIndex(int index)
         {
             Debug.Assert(_levelRepository.Levels.Count > index);
-            _level = Object.Instantiate(_levelRepository.Levels[index]);
-            _level.Initialize();
+            _level = _levelFactory.Create(levelIndex: index);
             _level.Died += OnDied;
             _level.Completed += OnCompleted;
             _currentIndex = index;

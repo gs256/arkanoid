@@ -14,8 +14,6 @@ namespace Arkanoid.Base
         [field: SerializeField]
         public LevelRepository LevelRepository { get; private set; }
 
-        public RacketFactory RacketFactory { get; private set; }
-        public BallFactory BallFactory { get; private set; }
         public CoroutineRunner CoroutineRunner { get; private set; }
         public SceneRepository SceneRepository { get; private set; }
         public SceneLoader SceneLoader { get; private set; }
@@ -28,8 +26,6 @@ namespace Arkanoid.Base
         {
             Player = new Player();
             CoroutineRunner = CoroutineRunner.Create();
-            RacketFactory = new RacketFactory(PrefabRepository);
-            BallFactory = new BallFactory(PrefabRepository);
             SceneRepository = new SceneRepository();
             SceneLoader = new SceneLoader(SceneRepository);
             MainMenuProvider = new MainMenuProvider();
