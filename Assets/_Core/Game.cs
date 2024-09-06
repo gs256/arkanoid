@@ -1,6 +1,5 @@
 using System;
 using Arkanoid.Base;
-using Arkanoid.Base.GameStates;
 using Arkanoid.Levels;
 using Arkanoid.Ui;
 using UnityEngine;
@@ -10,14 +9,12 @@ namespace Arkanoid
     public class Game : MonoBehaviour, IDisposable
     {
         private LevelManager _levelManager;
-        private GameStateMachine _gameStateMachine;
         private Player _player;
         private UiController _uiController;
 
         private void Awake()
         {
             _player = GlobalContext.Instance.Player;
-            _gameStateMachine = GlobalContext.Instance.GameStateMachine;
             _levelManager = GameContext.Instance.LevelManager;
             _uiController = GameContext.Instance.UiController;
         }
@@ -65,7 +62,7 @@ namespace Arkanoid
 
         private void OnCompletedAllLevels()
         {
-            _gameStateMachine.Enter<MenuState>();
+            _uiController.ShowGameCompleted();
         }
 
         private void Update()

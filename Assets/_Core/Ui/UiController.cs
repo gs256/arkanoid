@@ -20,6 +20,9 @@ namespace Arkanoid.Ui
         private GameOverScreen _gameOverScreen;
 
         [SerializeField]
+        private GameCompletedScreen _gameCompletedScreen;
+
+        [SerializeField]
         private Game _game;
 
         private GameStateMachine _gameStateMachine;
@@ -28,6 +31,7 @@ namespace Arkanoid.Ui
         public void ShowLevel(int levelNumber) => _levelView.ShowLevel(levelNumber);
         public void ShowScore(int score) => _scoreView.ShowScore(score);
         public void ShowGameOver() => _gameOverScreen.Show();
+        public void ShowGameCompleted() => _gameCompletedScreen.Show();
 
         public void Revive() => _game.Revive();
         public void ExitToMenu() => _gameStateMachine.Enter<MenuState>();
@@ -40,7 +44,9 @@ namespace Arkanoid.Ui
 
             _livesView.Initialize(heartFactory);
             _gameOverScreen.Initialize(this);
+            _gameCompletedScreen.Initialize(this);
             _gameOverScreen.Hide();
+            _gameCompletedScreen.Hide();
         }
     }
 }
