@@ -11,6 +11,9 @@ namespace Arkanoid.Ui
         private LivesView _livesView;
 
         [SerializeField]
+        private LevelView _levelView;
+
+        [SerializeField]
         private GameOverScreen _gameOverScreen;
 
         [SerializeField]
@@ -19,6 +22,7 @@ namespace Arkanoid.Ui
         private GameStateMachine _gameStateMachine;
 
         public void ShowLives(int lives) => _livesView.SetLives(lives);
+        public void ShowLevel(int levelNumber) => _levelView.ShowLevel(levelNumber);
         public void ShowGameOver() => _gameOverScreen.Show();
 
         public void Revive() => _game.Revive();

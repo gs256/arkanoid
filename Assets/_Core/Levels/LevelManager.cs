@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Arkanoid.Ui;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -14,13 +15,15 @@ namespace Arkanoid.Levels
 
         private readonly LevelRepository _levelRepository;
         private readonly CoroutineRunner _coroutineRunner;
+        private readonly UiController _uiController;
         private Level _level;
         private int _currentIndex;
 
-        public LevelManager(LevelRepository levelRepository, CoroutineRunner coroutineRunner)
+        public LevelManager(LevelRepository levelRepository, CoroutineRunner coroutineRunner, UiController uiController)
         {
             _levelRepository = levelRepository;
             _coroutineRunner = coroutineRunner;
+            _uiController = uiController;
         }
 
         public void LoadFirstLevel()
@@ -60,6 +63,7 @@ namespace Arkanoid.Levels
             _level.Died += OnDied;
             _level.Completed += OnCompleted;
             _currentIndex = index;
+            _uiController.ShowLevel(_currentIndex + 1);
         }
 
         private void OnDied()

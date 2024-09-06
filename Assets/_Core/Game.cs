@@ -16,10 +16,10 @@ namespace Arkanoid
 
         private void Awake()
         {
-            _levelManager = GlobalContext.Instance.LevelManager;
-            _gameStateMachine = GlobalContext.Instance.GameStateMachine;
-            _uiController = GameContext.Instance.UiController;
             _player = GlobalContext.Instance.Player;
+            _gameStateMachine = GlobalContext.Instance.GameStateMachine;
+            _levelManager = GameContext.Instance.LevelManager;
+            _uiController = GameContext.Instance.UiController;
         }
 
         public void StartGame()

@@ -16,7 +16,6 @@ namespace Arkanoid.Base
 
         public RacketFactory RacketFactory { get; private set; }
         public BallFactory BallFactory { get; private set; }
-        public LevelManager LevelManager { get; private set; }
         public CoroutineRunner CoroutineRunner { get; private set; }
         public SceneRepository SceneRepository { get; private set; }
         public SceneLoader SceneLoader { get; private set; }
@@ -31,7 +30,6 @@ namespace Arkanoid.Base
             CoroutineRunner = CoroutineRunner.Create();
             RacketFactory = new RacketFactory(PrefabRepository);
             BallFactory = new BallFactory(PrefabRepository);
-            LevelManager = new LevelManager(LevelRepository, CoroutineRunner);
             SceneRepository = new SceneRepository();
             SceneLoader = new SceneLoader(SceneRepository);
             MainMenuProvider = new MainMenuProvider();
