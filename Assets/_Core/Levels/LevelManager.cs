@@ -44,6 +44,16 @@ namespace Arkanoid.Levels
             _level.Revive();
         }
 
+        public void PauseLevel()
+        {
+            _level.Pause();
+        }
+
+        public void ResumeLevel()
+        {
+            _level.Resume();
+        }
+
         public void RestartCompletely()
         {
             UnloadCurrentLevel();

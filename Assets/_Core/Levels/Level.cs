@@ -26,6 +26,7 @@ namespace Arkanoid.Levels
         private CoroutineRunner _coroutineRunner;
         private BallCollisionProcessor _ballCollisionProcessor;
         private LevelState _currentState = LevelState.Waiting;
+        private LevelState _stateBeforePause = LevelState.Waiting;
 
         public void Initialize(Player player, RacketFactory racketFactory,
             BallFactory ballFactory, CoroutineRunner coroutineRunner)
@@ -54,7 +55,7 @@ namespace Arkanoid.Levels
 
             if (_currentState is LevelState.Waiting)
                 _ball.Follow(_racket.transform);
-            else
+            else if (_currentState is not LevelState.Pause)
                 _ball.UpdatePosition(Time.deltaTime);
 
             if (_currentState is LevelState.Playing)
@@ -67,6 +68,17 @@ namespace Arkanoid.Levels
         {
             _currentState = LevelState.Waiting;
             SetupBall();
+        }
+
+        public void Pause()
+        {
+            _stateBeforePause = _currentState;
+            _currentState = LevelState.Pause;
+        }
+
+        public void Resume()
+        {
+            _currentState = _stateBeforePause;
         }
 
         private void SetupBall()

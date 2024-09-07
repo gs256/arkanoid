@@ -34,6 +34,18 @@ namespace Arkanoid
             _levelManager.StartLevel();
         }
 
+        public void Pause()
+        {
+            _levelManager.PauseLevel();
+            Time.timeScale = 0f;
+        }
+
+        public void Resume()
+        {
+            _levelManager.ResumeLevel();
+            Time.timeScale = 1f;
+        }
+
         public void Dispose()
         {
             _levelManager.CompletedAllLevels -= OnCompletedAllLevels;

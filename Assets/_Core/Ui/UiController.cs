@@ -28,6 +28,12 @@ namespace Arkanoid.Ui
         [SerializeField]
         private GameArea _gameArea;
 
+        [SerializeField]
+        private PauseMenu _pauseMenu;
+
+        [SerializeField]
+        private PauseButton _pauseButton;
+
         private GameStateMachine _gameStateMachine;
 
         public void ShowLives(int lives) => _livesView.SetLives(lives);
@@ -35,11 +41,14 @@ namespace Arkanoid.Ui
         public void ShowScore(int score) => _scoreView.ShowScore(score);
         public void ShowGameOver() => _gameOverScreen.Show();
         public void ShowGameCompleted() => _gameCompletedScreen.Show();
+        public void ShowPauseMenu() => _pauseMenu.Show();
 
         public void StartGame() => _game.StartGame();
         public void Revive() => _game.Revive();
         public void ExitToMenu() => _gameStateMachine.Enter<MenuState>();
         public void RestartGame() => _game.Restart();
+        public void PauseGame() => _game.Pause();
+        public void ResumeGame() => _game.Resume();
 
         private void Awake()
         {
@@ -50,8 +59,11 @@ namespace Arkanoid.Ui
             _gameOverScreen.Initialize(this);
             _gameCompletedScreen.Initialize(this);
             _gameArea.Initialize(this);
+            _pauseMenu.Initialize(this);
+            _pauseButton.Initialize(this);
             _gameOverScreen.Hide();
             _gameCompletedScreen.Hide();
+            _pauseMenu.Hide();
         }
     }
 }
