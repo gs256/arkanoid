@@ -43,7 +43,8 @@ namespace Arkanoid.Levels
 
         public void StartLevel()
         {
-            _currentState = LevelState.Playing;
+            if (_currentState is LevelState.Waiting)
+                _currentState = LevelState.Playing;
         }
 
         private void Update()
@@ -58,6 +59,8 @@ namespace Arkanoid.Levels
 
             if (_currentState is LevelState.Playing)
                 CheckDieCondition();
+
+            _ballCollisionProcessor.ProcessCollision(_ball);
         }
 
         public void Revive()
@@ -71,7 +74,6 @@ namespace Arkanoid.Levels
             if (_ball != null)
                 Destroy(_ball.gameObject);
             _ball = _ballFactory.Create(_field, _racket);
-            _ball.Initialize(_ballCollisionProcessor);
         }
 
         private void SetupBlocks()

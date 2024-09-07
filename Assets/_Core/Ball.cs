@@ -21,12 +21,9 @@ namespace Arkanoid
         [SerializeField]
         private BoxCollider2D _collider;
 
-        private BallCollisionProcessor _collisionProcessor;
+        [SerializeField]
+        private Rigidbody2D _rigidbody;
 
-        public void Initialize(BallCollisionProcessor collisionProcessor)
-        {
-            _collisionProcessor = collisionProcessor;
-        }
 
         public void UpdatePosition(float deltaTime)
         {
@@ -39,9 +36,9 @@ namespace Arkanoid
             Position = new Vector2(target.position.x, target.position.y + yOffset);
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void FixedUpdate()
         {
-            _collisionProcessor.ProcessCollision(this, other);
+            _rigidbody.velocity = Vector2.zero;
         }
     }
 }

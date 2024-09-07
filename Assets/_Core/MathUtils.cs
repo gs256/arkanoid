@@ -19,6 +19,8 @@ namespace Arkanoid
 
         public static Vector2 GetMirrorVector(Vector2 vector, Vector2 normal)
         {
+            if (Vector2.Dot(vector, normal) > 0)
+                normal *= -1;
             return vector - 2f * Vector2.Dot(vector, normal) * normal;
         }
 
