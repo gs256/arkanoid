@@ -7,7 +7,7 @@ namespace Arkanoid
     {
         // TODO: to config
         private const float RandomBounceAngleScattering = 0f;
-        private const float RayDistance = 0.1f;
+        private const float RayExtraDistance = 0.02f;
 
         public void ProcessCollision(Ball ball)
         {
@@ -40,10 +40,10 @@ namespace Arkanoid
         private bool TryGetHit(Ball ball, out Collider2D collider, out Vector2 normal)
         {
             Bounds ballBounds = ball.Bounds;
-            RaycastHit2D upHit = Physics2D.Raycast(ball.Position, Vector2.up, ballBounds.extents.y + RayDistance);
-            RaycastHit2D rightHit = Physics2D.Raycast(ball.Position, Vector2.right, ballBounds.extents.x + RayDistance);
-            RaycastHit2D downHit = Physics2D.Raycast(ball.Position, Vector2.down, ballBounds.extents.y + RayDistance);
-            RaycastHit2D leftHit = Physics2D.Raycast(ball.Position, Vector2.left, ballBounds.extents.x + RayDistance);
+            RaycastHit2D upHit = Physics2D.Raycast(ball.Position, Vector2.up, ballBounds.extents.y + RayExtraDistance);
+            RaycastHit2D rightHit = Physics2D.Raycast(ball.Position, Vector2.right, ballBounds.extents.x + RayExtraDistance);
+            RaycastHit2D downHit = Physics2D.Raycast(ball.Position, Vector2.down, ballBounds.extents.y + RayExtraDistance);
+            RaycastHit2D leftHit = Physics2D.Raycast(ball.Position, Vector2.left, ballBounds.extents.x + RayExtraDistance);
             normal = Vector2.zero;
             collider = null;
 

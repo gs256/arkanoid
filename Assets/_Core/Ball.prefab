@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5339692270884559810}
   - component: {fileID: 2028389036950052054}
-  - component: {fileID: 2729494440964826685}
   - component: {fileID: 5998769603130984765}
   - component: {fileID: 295023318266431857}
   m_Layer: 2
@@ -87,33 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &2729494440964826685
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6121496784564717010}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!114 &5998769603130984765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,10 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c080d8055d489d9c74af56ce2a1f30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 10
+  <Speed>k__BackingField: 4
   <Angle>k__BackingField: 45
   _collider: {fileID: 295023318266431857}
-  _rigidbody: {fileID: 2729494440964826685}
 --- !u!61 &295023318266431857
 BoxCollider2D:
   m_ObjectHideFlags: 0

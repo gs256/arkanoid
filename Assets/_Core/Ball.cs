@@ -12,17 +12,14 @@ namespace Arkanoid
 
         public Vector2 Position
         {
-            get => _rigidbody.position;
-            set => _rigidbody.MovePosition(value);
+            get => transform.position;
+            set => transform.position = value;
         }
 
         public Bounds Bounds => _collider.bounds;
 
         [SerializeField]
         private BoxCollider2D _collider;
-
-        [SerializeField]
-        private Rigidbody2D _rigidbody;
 
 
         public void UpdatePosition(float deltaTime)
@@ -34,11 +31,6 @@ namespace Arkanoid
         {
             float yOffset = transform.position.y - target.position.y;
             Position = new Vector2(target.position.x, target.position.y + yOffset);
-        }
-
-        private void FixedUpdate()
-        {
-            _rigidbody.velocity = Vector2.zero;
         }
     }
 }
