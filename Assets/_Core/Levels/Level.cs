@@ -41,7 +41,6 @@ namespace Arkanoid.Levels
             _racket = _racketFactory.Create(_field);
             SetupBall();
             SetupBlocks();
-            Application.targetFrameRate = 20;
         }
 
         public void StartLevel()
@@ -62,6 +61,15 @@ namespace Arkanoid.Levels
 
             if (_currentState is LevelState.Playing)
                 CheckDieCondition();
+
+        }
+
+        private void FixedUpdate()
+        {
+            if (_currentState is LevelState.Waiting)
+                _ball.Follow(_racket.transform);
+            else if (_currentState is not LevelState.Pause)
+                _ball.UpdatePosition(Time.fixedDeltaTime);
 
             _ballCollisionProcessor.ProcessCollision(_ball);
         }

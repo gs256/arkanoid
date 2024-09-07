@@ -7,11 +7,11 @@ namespace Arkanoid
     {
         // TODO: to config
         private const float RandomBounceAngleScattering = 0f;
-        private const float RayDistance = 0.06f;
+        private const float RayDistance = 0.1f;
 
         public void ProcessCollision(Ball ball)
         {
-            if (TryGetHit(ball.Bounds, out Collider2D collider, out Vector2 normal))
+            if (TryGetHit(ball, out Collider2D collider, out Vector2 normal))
             {
                 ProcessBounce(ball, normal);
                 if (collider.gameObject.HasComponent<Block>(out Block block))
@@ -37,44 +37,45 @@ namespace Arkanoid
             return collider.gameObject.HasTag(ObjectTag.Collidable);
         }
 
-        private bool TryGetHit(Bounds ballBounds, out Collider2D collider, out Vector2 normal)
+        private bool TryGetHit(Ball ball, out Collider2D collider, out Vector2 normal)
         {
-            RaycastHit2D upHit = Physics2D.Raycast(new Vector2(ballBounds.center.x, ballBounds.max.y), Vector2.up, RayDistance);
-            RaycastHit2D rightHit = Physics2D.Raycast(new Vector2(ballBounds.max.x, ballBounds.center.y), Vector2.right, RayDistance);
-            RaycastHit2D downHit = Physics2D.Raycast(new Vector2(ballBounds.center.x, ballBounds.min.y), Vector2.down, RayDistance);
-            RaycastHit2D leftHit = Physics2D.Raycast(new Vector2(ballBounds.min.x, ballBounds.center.y), Vector2.left, RayDistance);
+            Bounds ballBounds = ball.Bounds;
+            RaycastHit2D upHit = Physics2D.Raycast(ball.Position, Vector2.up, ballBounds.extents.y + RayDistance);
+            RaycastHit2D rightHit = Physics2D.Raycast(ball.Position, Vector2.right, ballBounds.extents.x + RayDistance);
+            RaycastHit2D downHit = Physics2D.Raycast(ball.Position, Vector2.down, ballBounds.extents.y + RayDistance);
+            RaycastHit2D leftHit = Physics2D.Raycast(ball.Position, Vector2.left, ballBounds.extents.x + RayDistance);
+            normal = Vector2.zero;
+            collider = null;
 
             if (IsCollidable(upHit.collider))
             {
-                normal = Vector2.down;
+                normal += Vector2.down;
                 collider = upHit.collider;
-                return true;
             }
 
             if (IsCollidable(downHit.collider))
             {
-                normal = Vector2.up;
+                normal += Vector2.up;
                 collider = downHit.collider;
-                return true;
             }
 
             if (IsCollidable(rightHit.collider))
             {
-                normal = Vector2.left;
+                normal += Vector2.left;
                 collider = rightHit.collider;
-                return true;
             }
 
             if (IsCollidable(leftHit.collider))
             {
-                normal = Vector2.right;
+                normal += Vector2.right;
                 collider = leftHit.collider;
-                return true;
             }
 
-            normal = Vector2.zero;
-            collider = null;
-            return false;
+            if (collider == null)
+                return false;
+
+            normal.Normalize();
+            return true;
         }
     }
 }

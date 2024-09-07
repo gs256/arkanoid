@@ -12,8 +12,8 @@ namespace Arkanoid
 
         public Vector2 Position
         {
-            get => transform.position;
-            set => transform.position = value;
+            get => _rigidbody.position;
+            set => _rigidbody.MovePosition(value);
         }
 
         public Bounds Bounds => _collider.bounds;
