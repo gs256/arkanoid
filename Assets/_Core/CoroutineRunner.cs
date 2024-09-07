@@ -10,7 +10,6 @@ namespace Arkanoid
         {
             GameObject gameObject = new GameObject("Coroutine runner");
             CoroutineRunner runner = gameObject.AddComponent<CoroutineRunner>();
-            DontDestroyOnLoad(gameObject);
             return runner;
         }
 

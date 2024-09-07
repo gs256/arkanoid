@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Arkanoid.Blocks;
 using UnityEngine;
 
 namespace Arkanoid.Levels
@@ -46,7 +47,7 @@ namespace Arkanoid.Levels
 
         private void OnDestroy()
         {
-            if (_routine != null)
+            if (_routine != null && _coroutineRunner != null)
                 _coroutineRunner.StopCoroutine(_routine);
         }
 
