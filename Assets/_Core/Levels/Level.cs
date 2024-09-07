@@ -78,8 +78,6 @@ namespace Arkanoid.Levels
                 _ball.Follow(_racket.transform);
             else if (_currentState is not LevelState.Pause)
                 _ball.UpdatePosition(Time.fixedDeltaTime);
-
-            _ballCollisionProcessor.ProcessCollision(_ball);
         }
 
         public void Revive()
@@ -103,7 +101,7 @@ namespace Arkanoid.Levels
         {
             if (_ball != null)
                 Destroy(_ball.gameObject);
-            _ball = _ballFactory.Create(_field, _racket);
+            _ball = _ballFactory.Create(_field, _racket, _ballCollisionProcessor);
         }
 
         private void SetupBlocks()

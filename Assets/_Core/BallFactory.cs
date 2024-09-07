@@ -13,7 +13,7 @@ namespace Arkanoid
             _prefabRepository = prefabRepository;
         }
 
-        public Ball Create(Field field, Racket racket)
+        public Ball Create(Field field, Racket racket, BallCollisionProcessor collisionProcessor)
         {
             Ball prefab = _prefabRepository.Ball;
             Ball ball = Object.Instantiate(prefab, field.transform);
@@ -22,6 +22,7 @@ namespace Arkanoid
                 field.Bounds.center.x,
                 racket.transform.position.y + racket.Bounds.extents.y + ball.Bounds.extents.y + RacketPadding);
 
+            ball.Initialize(collisionProcessor);
             return ball;
         }
     }
