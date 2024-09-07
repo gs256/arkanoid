@@ -10,6 +10,7 @@ namespace Arkanoid.Levels
         private const float MouseSensitivity = 0.01f;
         private const float DelayBeforeDeath = 1f;
         private const float DelayBeforeComplete = 1f;
+        private const float RacketMovementSmoothFactor = 40f;
 
         public event Action Lost;
         public event Action Completed;
@@ -40,6 +41,7 @@ namespace Arkanoid.Levels
             _racket = _racketFactory.Create(_field);
             SetupBall();
             SetupBlocks();
+            Application.targetFrameRate = 20;
         }
 
         public void StartLevel()
@@ -51,7 +53,7 @@ namespace Arkanoid.Levels
         private void Update()
         {
             if (_currentState is not LevelState.Pause)
-                UpdateRacketPosition();
+                UpdateRacketPosition(Time.deltaTime);
 
             if (_currentState is LevelState.Waiting)
                 _ball.Follow(_racket.transform);
@@ -116,9 +118,13 @@ namespace Arkanoid.Levels
             });
         }
 
-        private void UpdateRacketPosition()
+        private void UpdateRacketPosition(float deltaTime)
         {
-            _racket.Position = _racket.Position.WithX((Input.mousePosition.x - Screen.width / 2f) * MouseSensitivity);
+            _racket.Position = Vector2.MoveTowards(
+                _racket.Position,
+                _racket.Position.WithX((Input.mousePosition.x - Screen.width / 2f) * MouseSensitivity),
+                RacketMovementSmoothFactor * deltaTime);
+
             ClampRacketPosition();
         }
 
