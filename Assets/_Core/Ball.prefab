@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Speed>k__BackingField: 4
-  <Angle>k__BackingField: 45
+  <Angle>k__BackingField: 90
   _collider: {fileID: 295023318266431857}
 --- !u!61 &295023318266431857
 BoxCollider2D:

@@ -5,29 +5,44 @@ namespace Arkanoid
 {
     public class BallCollisionProcessor
     {
-        // TODO: to config
-        private const float RandomBounceAngleScattering = 0f;
         private const float RayExtraDistance = 0.02f;
+        private const float AngleEps = 0.01f;
 
         public void ProcessCollision(Ball ball)
         {
             if (TryGetHit(ball, out Collider2D collider, out Vector2 normal))
             {
-                ProcessBounce(ball, normal);
+                ProcessBounce(ball, collider, normal);
+
                 if (collider.gameObject.HasComponent<Block>(out Block block))
                     block.Hit();
             }
         }
 
-        private void ProcessBounce(Ball ball, Vector2 normal)
+        private void ProcessBounce(Ball ball, Collider2D collider, Vector2 normal)
         {
-            if (Vector2.Dot(normal, MathUtils.AngleToVector(ball.Angle)) > 0)
-                return;
-
             float mirrorAngle = MathUtils.GetMirrorAngle(ball.Angle, normal);
-            float scattering = Random.Range(-RandomBounceAngleScattering, RandomBounceAngleScattering);
 
-            ball.Angle = mirrorAngle + scattering;
+            if (collider.gameObject.HasComponent<Racket>(out Racket racket))
+            {
+                if (normal != Vector2.up)
+                    return;
+
+                if (Vector2.Dot(normal, MathUtils.AngleToVector(ball.Angle)) > 0)
+                    return;
+
+                float factor = -1 * (ball.Position.x - racket.Position.x) / racket.Bounds.extents.x;
+                factor = Mathf.Clamp(factor, -1f, 1f);
+                float steerAngle = MathUtils.Remap(factor, -1, 1, 10, 170);
+                ball.Angle = (mirrorAngle + steerAngle) / 2f;
+            }
+            else
+            {
+                if (IsBlock(collider) && Mathf.Abs(mirrorAngle - ball.Angle) < AngleEps)
+                    ball.Angle = MathUtils.VectorToAngle(normal - MathUtils.AngleToVector(ball.Angle));
+                else
+                    ball.Angle = mirrorAngle;
+            }
         }
 
         private bool IsCollidable(Collider2D collider)
@@ -35,9 +50,9 @@ namespace Arkanoid
             return collider?.gameObject.HasTag(ObjectTag.Collidable) ?? false;
         }
 
-        private bool IsRacket(Collider2D collider)
+        public bool IsBlock(Collider2D collider)
         {
-            return collider?.gameObject.HasTag(ObjectTag.Racket) ?? false;
+            return collider?.gameObject.HasTag(ObjectTag.Block) ?? false;
         }
 
         private bool TryGetHit(Ball ball, out Collider2D collider, out Vector2 normal)
@@ -52,25 +67,25 @@ namespace Arkanoid
 
             if (IsCollidable(upHit.collider))
             {
-                normal += Vector2.down;
+                normal = Vector2.down;
                 collider = upHit.collider;
             }
 
             if (IsCollidable(downHit.collider))
             {
-                normal += Vector2.up;
+                normal = Vector2.up;
                 collider = downHit.collider;
             }
 
             if (IsCollidable(rightHit.collider))
             {
-                normal += Vector2.left;
+                normal = Vector2.left;
                 collider = rightHit.collider;
             }
 
             if (IsCollidable(leftHit.collider))
             {
-                normal += Vector2.right;
+                normal = Vector2.right;
                 collider = leftHit.collider;
             }
 

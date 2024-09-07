@@ -4,9 +4,6 @@ namespace Arkanoid
 {
     public class Racket : MonoBehaviour
     {
-        [field: SerializeField]
-        public float Speed { get; private set; }
-
         public Vector2 Position
         {
             get => transform.position;
