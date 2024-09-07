@@ -28,9 +28,10 @@ namespace Arkanoid.Levels
         private BallCollisionProcessor _ballCollisionProcessor;
         private LevelState _currentState = LevelState.Waiting;
         private LevelState _stateBeforePause = LevelState.Waiting;
+        private Coroutine _routine;
 
-        public void Initialize(Player player, RacketFactory racketFactory,
-            BallFactory ballFactory, CoroutineRunner coroutineRunner)
+        public void Initialize(Player player, RacketFactory racketFactory, BallFactory ballFactory,
+            CoroutineRunner coroutineRunner)
         {
             _player = player;
             _racketFactory = racketFactory;
@@ -41,6 +42,12 @@ namespace Arkanoid.Levels
             _racket = _racketFactory.Create(_field);
             SetupBall();
             SetupBlocks();
+        }
+
+        private void OnDestroy()
+        {
+            if (_routine != null)
+                _coroutineRunner.StopCoroutine(_routine);
         }
 
         public void StartLevel()
@@ -119,7 +126,7 @@ namespace Arkanoid.Levels
         private void OnAllBlocksDestroyed()
         {
             _currentState = LevelState.Completed;
-            _coroutineRunner.CallAfterDelay(DelayBeforeComplete, () =>
+            _routine = _coroutineRunner.CallAfterDelay(DelayBeforeComplete, () =>
             {
                 _currentState = LevelState.Pause;
                 Completed?.Invoke();
@@ -156,7 +163,7 @@ namespace Arkanoid.Levels
             {
                 _currentState = LevelState.Died;
 
-                _coroutineRunner.CallAfterDelay(DelayBeforeDeath, () =>
+                _routine = _coroutineRunner.CallAfterDelay(DelayBeforeDeath, () =>
                 {
                     _currentState = LevelState.Pause;
                     _player.DecreaseLives();

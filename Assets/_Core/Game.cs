@@ -27,6 +27,7 @@ namespace Arkanoid
             _player.Initialize();
             _levelManager.LoadFirstLevel();
             _uiController.ShowLives(_player.Lives);
+            Time.timeScale = 1f;
         }
 
         public void StartGame()

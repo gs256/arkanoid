@@ -14,9 +14,9 @@ namespace Arkanoid
             return runner;
         }
 
-        public void CallAfterDelay(float delaySeconds, Action callback)
+        public Coroutine CallAfterDelay(float delaySeconds, Action callback)
         {
-            StartCoroutine(RunAfterDelayCoroutine(delaySeconds, callback));
+            return StartCoroutine(RunAfterDelayCoroutine(delaySeconds, callback));
         }
 
         private IEnumerator RunAfterDelayCoroutine(float delaySeconds, Action callback)

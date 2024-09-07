@@ -32,9 +32,12 @@ namespace Arkanoid
 
         private bool IsCollidable(Collider2D collider)
         {
-            if (collider == null)
-                return false;
-            return collider.gameObject.HasTag(ObjectTag.Collidable);
+            return collider?.gameObject.HasTag(ObjectTag.Collidable) ?? false;
+        }
+
+        private bool IsRacket(Collider2D collider)
+        {
+            return collider?.gameObject.HasTag(ObjectTag.Racket) ?? false;
         }
 
         private bool TryGetHit(Ball ball, out Collider2D collider, out Vector2 normal)
