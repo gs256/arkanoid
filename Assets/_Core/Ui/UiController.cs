@@ -34,6 +34,12 @@ namespace Arkanoid.Ui
         [SerializeField]
         private PauseButton _pauseButton;
 
+        [SerializeField]
+        private HelpButton _helpButton;
+
+        [SerializeField]
+        private HelpScreen _helpScreen;
+
         private GameStateMachine _gameStateMachine;
 
         public void ShowLives(int lives) => _livesView.SetLives(lives);
@@ -42,6 +48,7 @@ namespace Arkanoid.Ui
         public void ShowGameOver() => _gameOverScreen.Show();
         public void ShowGameCompleted() => _gameCompletedScreen.Show();
         public void ShowPauseMenu() => _pauseMenu.Show();
+        public void ShowHelp() => _helpScreen.Show();
 
         public void StartGame() => _game.StartGame();
         public void Revive() => _game.Revive();
@@ -61,9 +68,12 @@ namespace Arkanoid.Ui
             _gameArea.Initialize(this);
             _pauseMenu.Initialize(this);
             _pauseButton.Initialize(this);
+            _helpButton.Initialize(this);
+            _helpScreen.Initialize(this);
             _gameOverScreen.Hide();
             _gameCompletedScreen.Hide();
             _pauseMenu.Hide();
+            _helpScreen.Hide();
         }
     }
 }
