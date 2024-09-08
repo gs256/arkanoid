@@ -21,11 +21,14 @@ namespace Arkanoid
             if (collision.gameObject.HasComponent<Racket>(out Racket racket))
             {
                 if (ShouldIgnoreRacketCollision(ball, normal))
+                {
+                    Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
                     return;
+                }
 
-                float factor = -1 * (ball.Position.x - racket.Position.x) / racket.Bounds.extents.x;
-                factor = Mathf.Clamp(factor, -1f, 1f);
-                float steerAngle = MathUtils.Remap(factor, -1, 1, 10, 170);
+                float steerFactor = -1 * (ball.Position.x - racket.Position.x) / racket.Bounds.extents.x;
+                steerFactor = Mathf.Clamp(steerFactor, -1f, 1f);
+                float steerAngle = MathUtils.Remap(steerFactor, -1, 1, 10, 170);
                 ball.Angle = (mirrorAngle + steerAngle) / 2f;
             }
             else
@@ -36,7 +39,9 @@ namespace Arkanoid
 
         private bool ShouldIgnoreRacketCollision(Ball ball, Vector2 normal)
         {
-            return (normal != Vector2.up) || Vector2.Dot(normal, MathUtils.AngleToVector(ball.Angle)) > 0;
+            bool collidedWithSide = normal != Vector2.up;
+            bool movingUpwards = Vector2.Dot(normal, MathUtils.AngleToVector(ball.Angle)) > 0;
+            return collidedWithSide || movingUpwards;
         }
     }
 }
