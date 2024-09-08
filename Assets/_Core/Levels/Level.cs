@@ -11,7 +11,6 @@ namespace Arkanoid.Levels
 {
     public class Level : MonoBehaviour
     {
-        private const float MouseSensitivity = 0.01f;
         private const float DelayBeforeDeath = 1f;
         private const float DelayBeforeComplete = 1f;
         private const float RacketMovementSmoothFactor = 40f;
@@ -30,9 +29,11 @@ namespace Arkanoid.Levels
         private Player _player;
         private CoroutineRunner _coroutineRunner;
         private BallCollisionProcessor _ballCollisionProcessor;
+        private Coroutine _routine;
+        private Camera _camera;
+
         private LevelState _currentState = LevelState.Waiting;
         private LevelState _stateBeforePause = LevelState.Waiting;
-        private Coroutine _routine;
 
         public void Initialize(Player player, RacketFactory racketFactory, BallFactory ballFactory,
             CoroutineRunner coroutineRunner)
@@ -41,6 +42,7 @@ namespace Arkanoid.Levels
             _racketFactory = racketFactory;
             _ballFactory = ballFactory;
             _coroutineRunner = coroutineRunner;
+            _camera = Camera.main;
 
             _ballCollisionProcessor = new BallCollisionProcessor();
             _racket = _racketFactory.Create(_field);
@@ -137,9 +139,8 @@ namespace Arkanoid.Levels
 
         private void UpdateRacketPosition(float deltaTime)
         {
-            _racket.Position = Vector2.MoveTowards(
-                _racket.Position,
-                _racket.Position.WithX((Input.mousePosition.x - Screen.width / 2f) * MouseSensitivity),
+            float targetX = _camera.ScreenToWorldPoint(Input.mousePosition).x;
+            _racket.Position = Vector2.MoveTowards(_racket.Position, _racket.Position.WithX(targetX),
                 RacketMovementSmoothFactor * deltaTime);
 
             ClampRacketPosition();
