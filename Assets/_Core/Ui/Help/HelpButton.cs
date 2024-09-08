@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Arkanoid.Ui
+namespace Arkanoid.Ui.Help
 {
-    public class PauseButton : MonoBehaviour
+    public class HelpButton : MonoBehaviour
     {
         [SerializeField]
         private Button _button;
@@ -28,7 +28,7 @@ namespace Arkanoid.Ui
         private void Pause()
         {
             _uiController.PauseGame();
-            _uiController.ShowPauseMenu();
+            _uiController.ShowHelp();
         }
     }
 }

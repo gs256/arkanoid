@@ -1,3 +1,5 @@
+using Arkanoid.Base.Scenes;
+using Arkanoid.Common;
 using Arkanoid.Levels;
 using Arkanoid.Menu;
 using UnityEngine;

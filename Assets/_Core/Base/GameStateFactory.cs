@@ -1,4 +1,5 @@
 using Arkanoid.Base.GameStates;
+using Arkanoid.Base.Scenes;
 using Arkanoid.Menu;
 
 namespace Arkanoid.Base

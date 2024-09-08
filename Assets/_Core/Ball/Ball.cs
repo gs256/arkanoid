@@ -1,6 +1,7 @@
+using Arkanoid.Common;
 using UnityEngine;
 
-namespace Arkanoid
+namespace Arkanoid.Ball
 {
     public class Ball : MonoBehaviour
     {

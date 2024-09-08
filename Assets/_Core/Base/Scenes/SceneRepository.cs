@@ -1,4 +1,4 @@
-namespace Arkanoid.Base
+namespace Arkanoid.Base.Scenes
 {
     public class SceneRepository
     {

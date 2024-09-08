@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Arkanoid.Base
+namespace Arkanoid.Base.Scenes
 {
     public static class SceneUtils
     {

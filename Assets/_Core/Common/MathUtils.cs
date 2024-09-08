@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Arkanoid
+namespace Arkanoid.Common
 {
     public static class MathUtils
     {

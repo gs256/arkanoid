@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Arkanoid.Ball;
 using Arkanoid.Blocks;
+using Arkanoid.Common;
+using Arkanoid.Racket;
 using UnityEngine;
 
 namespace Arkanoid.Levels
@@ -21,8 +24,8 @@ namespace Arkanoid.Levels
 
         private RacketFactory _racketFactory;
         private BallFactory _ballFactory;
-        private Racket _racket;
-        private Ball _ball;
+        private Racket.Racket _racket;
+        private Ball.Ball _ball;
         private List<Block> _blocks;
         private Player _player;
         private CoroutineRunner _coroutineRunner;

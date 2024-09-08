@@ -1,6 +1,8 @@
 using Arkanoid.Base;
 using Arkanoid.Base.GameStates;
+using Arkanoid.Ui.Help;
 using Arkanoid.Ui.Lives;
+using Arkanoid.Ui.Pause;
 using UnityEngine;
 
 namespace Arkanoid.Ui

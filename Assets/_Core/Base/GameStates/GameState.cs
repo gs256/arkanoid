@@ -1,3 +1,4 @@
+using Arkanoid.Base.Scenes;
 
 namespace Arkanoid.Base.GameStates
 {

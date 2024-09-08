@@ -1,7 +1,8 @@
 using Arkanoid.Blocks;
+using Arkanoid.Common;
 using UnityEngine;
 
-namespace Arkanoid
+namespace Arkanoid.Ball
 {
     public class BallCollisionProcessor
     {
@@ -18,7 +19,7 @@ namespace Arkanoid
             Vector2 normal = collision.contacts[0].normal;
             float mirrorAngle = MathUtils.GetMirrorAngle(ball.Angle, normal);
 
-            if (collision.gameObject.HasComponent<Racket>(out Racket racket))
+            if (collision.gameObject.HasComponent<Racket.Racket>(out Racket.Racket racket))
             {
                 if (ShouldIgnoreRacketCollision(ball, normal))
                 {

@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Arkanoid.Ui
+namespace Arkanoid.Ui.Pause
 {
-    public class HelpScreen : MonoBehaviour
+    public class PauseMenu : MonoBehaviour
     {
         [SerializeField]
-        private Button _closeButton;
+        private Button _resumeButton;
+
+        [SerializeField]
+        private Button _exitButton;
 
         private UiController _uiController;
 
@@ -17,12 +20,14 @@ namespace Arkanoid.Ui
 
         private void Start()
         {
-            _closeButton.onClick.AddListener(Close);
+            _resumeButton.onClick.AddListener(Resume);
+            _exitButton.onClick.AddListener(ExitToMenu);
         }
 
         private void OnDestroy()
         {
-            _closeButton.onClick.RemoveListener(Close);
+            _resumeButton.onClick.RemoveListener(Resume);
+            _exitButton.onClick.RemoveListener(ExitToMenu);
         }
 
         public void Show()
@@ -35,10 +40,15 @@ namespace Arkanoid.Ui
             gameObject.SetActive(false);
         }
 
-        private void Close()
+        private void Resume()
         {
             _uiController.ResumeGame();
-            gameObject.SetActive(false);
+            Hide();
+        }
+
+        private void ExitToMenu()
+        {
+            _uiController.ExitToMenu();
         }
     }
 }

@@ -17,8 +17,6 @@ namespace Arkanoid.Base
             _states[typeof(InitializationState)] = _gameStateFactory.CreateInitializationState();
             _states[typeof(MenuState)] = _gameStateFactory.CreateMenuState();
             _states[typeof(GameState)] = _gameStateFactory.CreateGameState();
-
-            InitializeStates();
         }
 
         public void Enter<T>()
@@ -26,13 +24,6 @@ namespace Arkanoid.Base
             _currentState?.Exit();
             _currentState = _states[typeof(T)];
             _currentState.Enter();
-        }
-
-        private void InitializeStates()
-        {
-            foreach (var state in _states.Values)
-                if (state is IInitializable initializable)
-                    initializable.Initialize();
         }
     }
 }

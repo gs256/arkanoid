@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Arkanoid
+namespace Arkanoid.Ball
 {
     public class BallFactory
     {
@@ -13,7 +13,7 @@ namespace Arkanoid
             _prefabRepository = prefabRepository;
         }
 
-        public Ball Create(Field field, Racket racket, BallCollisionProcessor collisionProcessor)
+        public Ball Create(Field field, Racket.Racket racket, BallCollisionProcessor collisionProcessor)
         {
             Ball prefab = _prefabRepository.Ball;
             Ball ball = Object.Instantiate(prefab, field.transform);
