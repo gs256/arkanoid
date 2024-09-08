@@ -1,4 +1,5 @@
-using System;
+using Arkanoid.Base;
+using Arkanoid.Base.GameStates;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,35 +7,39 @@ namespace Arkanoid.Menu
 {
     public class MainMenu : MonoBehaviour
     {
-        public event Action PlayClicked;
-        public event Action ExitClicked;
-
         [SerializeField]
         private Button _playButton;
 
         [SerializeField]
         private Button _exitButton;
 
+        private GameStateMachine _gameStateMachine;
+
+        public void Initialize(GameStateMachine gameStateMachine)
+        {
+            _gameStateMachine = gameStateMachine;
+        }
+
         private void Start()
         {
-            _playButton.onClick.AddListener(OnPlayClicked);
-            _exitButton.onClick.AddListener(OnExitClicked);
+            _playButton.onClick.AddListener(StartGame);
+            _exitButton.onClick.AddListener(Exit);
         }
 
         private void OnDestroy()
         {
-            _playButton.onClick.RemoveListener(OnPlayClicked);
-            _exitButton.onClick.RemoveListener(OnExitClicked);
+            _playButton.onClick.RemoveListener(StartGame);
+            _exitButton.onClick.RemoveListener(Exit);
         }
 
-        private void OnPlayClicked()
+        private void StartGame()
         {
-            PlayClicked?.Invoke();
+            _gameStateMachine.Enter<GameState>();
         }
 
-        private void OnExitClicked()
+        private void Exit()
         {
-            ExitClicked?.Invoke();
+            Application.Quit();
         }
     }
 }

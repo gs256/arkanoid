@@ -1,6 +1,5 @@
 using Arkanoid.Base.GameStates;
 using Arkanoid.Base.Scenes;
-using Arkanoid.Menu;
 
 namespace Arkanoid.Base
 {
@@ -8,14 +7,11 @@ namespace Arkanoid.Base
     {
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
-        private readonly MainMenuProvider _mainMenuProvider;
 
-        public GameStateFactory(GameStateMachine stateMachine, SceneLoader sceneLoader,
-            MainMenuProvider mainMenuProvider)
+        public GameStateFactory(GameStateMachine stateMachine, SceneLoader sceneLoader)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
-            _mainMenuProvider = mainMenuProvider;
         }
 
         public InitializationState CreateInitializationState()
@@ -25,7 +21,7 @@ namespace Arkanoid.Base
 
         public MenuState CreateMenuState()
         {
-            return new MenuState(_stateMachine, _sceneLoader, _mainMenuProvider);
+            return new MenuState(_stateMachine, _sceneLoader);
         }
 
         public GameState CreateGameState()

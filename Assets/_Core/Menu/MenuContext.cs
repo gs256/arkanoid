@@ -10,8 +10,8 @@ namespace Arkanoid.Menu
 
         private void Awake()
         {
-            MainMenuProvider mainMenuProvider = GlobalContext.Instance.MainMenuProvider;
-            mainMenuProvider.Initialize(_mainMenu);
+            var gameStateMachine = GlobalContext.Instance.GameStateMachine;
+            _mainMenu.Initialize(gameStateMachine);
         }
     }
 }

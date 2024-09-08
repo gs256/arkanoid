@@ -21,7 +21,6 @@ namespace Arkanoid.Base
         public SceneLoader SceneLoader { get; private set; }
         public GameStateFactory GameStateFactory { get; private set; }
         public GameStateMachine GameStateMachine { get; private set; }
-        public MainMenuProvider MainMenuProvider { get; private set; }
         public Player Player { get; private set; }
 
         private void Awake()
@@ -30,9 +29,8 @@ namespace Arkanoid.Base
             CoroutineRunner = CoroutineRunner.Create();
             SceneRepository = new SceneRepository();
             SceneLoader = new SceneLoader(SceneRepository);
-            MainMenuProvider = new MainMenuProvider();
             GameStateMachine = new GameStateMachine();
-            GameStateFactory = new GameStateFactory(GameStateMachine, SceneLoader, MainMenuProvider);
+            GameStateFactory = new GameStateFactory(GameStateMachine, SceneLoader);
 
             Instance = this;
         }

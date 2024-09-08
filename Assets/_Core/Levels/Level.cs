@@ -13,7 +13,7 @@ namespace Arkanoid.Levels
     {
         private const float DelayBeforeDeath = 1f;
         private const float DelayBeforeComplete = 1f;
-        private const float RacketMovementSmoothFactor = 40f;
+        private const float RacketMovementSmoothFactor = 45f;
 
         public event Action Lost;
         public event Action Completed;
