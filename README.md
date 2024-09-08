@@ -15,4 +15,4 @@ A simple arkanoid game made in Unity
 
 ## Download
 
-TODO
+You can find the latest Windows build on the [releases](https://github.com/gs256/arkanoid/releases) page
