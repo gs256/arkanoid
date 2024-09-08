@@ -61,6 +61,7 @@ namespace Arkanoid
 
         public void Restart()
         {
+            Time.timeScale = 1f;
             _player.Initialize();
             _levelManager.RestartCompletely();
             _uiController.ShowLives(_player.Lives);
